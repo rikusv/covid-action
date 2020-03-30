@@ -1,0 +1,121 @@
+<div class="row">
+
+  <div class="col-lg-6">
+
+    <div class="card mt-3">
+
+      <div class="card-body">
+
+        <form [formGroup]="locationForm" (ngSubmit)="save()">
+
+          <h5 class="card-title">Edit</h5>
+
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">
+                Name
+              </span>
+            </div>
+            <input type="text" formControlName="name" class="form-control">
+          </div>
+
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <label class="input-group-text">Category</label>
+            </div>
+            <select formControlName="category" class="custom-select">
+              <option value="Support">Support Service</option>
+              <option value="CAG">Community Action Group</option>
+              <option value="W-CAN">WhatsApp Community Action Network</option>
+              <option value="Pamphlets">Pamphlet Collection</option>
+            </select>
+          </div>
+
+          <div formArrayName="tags" class="form-group">
+            <div class="dropdown">
+              <button class="btn btn-secondary dropdown-toggle mb-1" type="button" data-toggle="dropdown">
+                Tags
+              </button>
+              <div class="dropdown-menu">
+                <a *ngFor="let tag of availableTags" (click)="addTag(tag)" class="dropdown-item">{{ tag }}</a>
+              </div>
+            </div>
+            <div class="form-group">
+              <button *ngFor="let tag of tags.controls; let i=index" (click)="removeTag(i)" class="btn btn-outline-info btn-sm mr-1 mb-1">
+                {{ tag.value }}
+                <span class="ml-2">&times;</span>
+              </button>
+            </div>
+          </div>
+
+          <div formGroupName="coordinates" class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Coordinates</span>
+            </div>
+            <input type="text" formControlName="latitude" placeholder="Latitude" class="form-control">
+            <input type="text" formControlName="longitude" placeholder="longitude" class="form-control">
+          </div>
+
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">
+                Description
+              </span>
+            </div>
+            <textarea rows="3" formControlName="description" class="form-control"></textarea>
+          </div>
+
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">
+                Web URL
+              </span>
+            </div>
+            <input type="url" formControlName="webUrl" class="form-control">
+          </div>
+
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">
+                WhatsApp URL
+              </span>
+            </div>
+            <input type="url" formControlName="whatsAppUrl" class="form-control">
+          </div>
+
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">
+                Email
+              </span>
+            </div>
+            <input type="email" formControlName="email" class="form-control">
+          </div>
+
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">
+                Telephone
+              </span>
+            </div>
+            <input type="text" formControlName="telephone" class="form-control">
+          </div>
+
+          <button class="col" type="submit" [disabled]="!locationForm.valid" class="btn btn-primary">
+            Save
+          </button>
+
+        </form>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="col-lg-6">
+    <app-active-location-view [location]="location$ | async" [single]="true">
+    </app-active-location-view>
+  </div>
+
+</div>

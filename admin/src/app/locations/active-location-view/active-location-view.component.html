@@ -1,0 +1,35 @@
+<div *ngIf="location" class="card mt-3">
+  <div class="card-body">
+    <h5 class="card-title">
+      <a *ngIf="!single; else singleLocationView" [routerLink]="['/locations', 'active', location.id]">
+        {{ location.name }}
+      </a>
+      <ng-template #singleLocationView>
+        {{ location.name }}
+      </ng-template>
+      <span class="badge badge-secondary">
+        {{ location.category }}
+      </span>
+    </h5>
+    <p>
+      <span *ngFor="let tag of location.tags" class="badge badge-info mr-1">{{ tag }}</span>
+    </p>
+    <p class="card-text">{{ location.description }}</p>
+    <a *ngIf="location.webUrl" [href]="location.webUrl" target="_blank" class="card-link">
+      Web
+    </a>
+    <a *ngIf="location.whatsAppUrl" [href]="location.whatsAppUrl" target="_blank" class="card-link">
+      WhatsApp
+    </a>
+    <a *ngIf="location.email" [href]="'mailto:' + location.email" target="_blank" class="card-link">
+      {{ location.email }}
+    </a>
+    <a *ngIf="location.telephone" [href]="'tel:' + location.telephone" target="_blank" class="card-link">
+      {{ location.telephone }}
+    </a>
+    <p>
+      <small class="text-muted">Coordinates: {{ location.coordinates.latitude + ', ' + location.coordinates.longitude }}
+      </small>
+    </p>
+  </div>
+</div>

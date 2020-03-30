@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "covid-action"
+  },
+  "targets": {
+    "covid-action": {
+      "hosting": {
+        "map": [
+          "covid-action-map"
+        ]
+      }
+    }
+  }
+}
