@@ -14,4 +14,3 @@ The technology solution consists of three parts:
 - Firestore [database](./database)
 
 See the README.md documents in the above directories for further technical information.
-=
