@@ -1,0 +1,62 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": [
+      "category",
+      "coordinates",
+      "name"
+    ],
+    "dependencies": {
+      "foo": { "required": ["bar"] }
+    },
+    "properties": {
+      "category": {
+        "enum": [
+          "CAN",
+          "W-CAN"
+        ]
+      },
+      "coordinates": {
+        "type": "object",
+        "properties": {
+          "latitude": {
+            "type": "number"
+          },
+          "longitude": {
+            "type": "number"
+          }
+        }
+      },
+      "description": {
+        "type": "string"
+      },
+      "email": {
+        "type": "string",
+        "format": "email"
+      },
+      "name": {
+        "type": "string"
+      },
+      "tags": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "telephone": {
+        "type": "string",
+        "pattern": "^\\+[0-9]+$"
+      },
+      "webUrl": {
+        "type": "string",
+        "format": "uri"
+      },
+      "whatsAppUrl": {
+        "type": "string",
+        "format": "uri"
+      }
+    }
+  }
+}
