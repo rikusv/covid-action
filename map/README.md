@@ -15,6 +15,7 @@ npm run serve
 ```
 
 > TODO: use webpack dev serve auto reload.
+> TODO: implement auto cache busting, e.g. with https://github.com/jantimon/html-webpack-plugin/blob/master/docs/template-option.md. As workaround manually increment `main-n.js` in index.html and webpack.config.js output.
 
 ## Deployment
 
