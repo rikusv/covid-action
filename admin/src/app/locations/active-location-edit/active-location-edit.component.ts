@@ -68,7 +68,9 @@ export class ActiveLocationEditComponent implements OnInit {
   updateForm(location: Location) {
     this.locationForm.patchValue(location)
     this.tags.clear()
-    location.tags.forEach(tag => this.addTag(tag))
+    if (location.tags) {
+      location.tags.forEach(tag => this.addTag(tag))
+    }
   }
 
   get tags() {
