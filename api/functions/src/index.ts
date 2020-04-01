@@ -61,6 +61,7 @@ const patchLocations = (
 ) => {
   const resultsPromises = patchedLocations.map(async patchedLocation => {
     patchedLocation.coordinates = new GeoPoint(patchedLocation.coordinates.latitude, patchedLocation.coordinates.longitude)
+    patchedLocation.tags = patchedLocation.tags || []
     const existing = locationCollection
     .where('category', '==', patchedLocation.category)
     .where('name', '==', patchedLocation.name)
