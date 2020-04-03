@@ -3,8 +3,7 @@
 import { DocumentData, DocumentSnapshot, GeoPoint } from '@google-cloud/firestore'
 import * as functions from 'firebase-functions'
 import * as admin from 'firebase-admin'
-import * as crypto from "crypto"
-
+import { createHash } from 'crypto'
 import Ajv from 'ajv'
 import locationsSchema from './schema/locations.json'
 
@@ -32,7 +31,7 @@ export const locations = functions.region('europe-west1').https.onRequest(async 
       if (!apiKey) {
         sendError(response, 403, 'not-authorized')
       } else {
-        const hash = crypto.createHash('sha256').update(apiKey).digest('hex')
+        const hash = createHash('sha256').update(apiKey).digest('hex')
         const client = await db.collection('clients').doc(hash).get()
         if (!client.exists) {
           sendError(response, 403, 'not-authorized')
