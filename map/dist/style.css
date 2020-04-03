@@ -53,6 +53,10 @@ ul {
   border-radius: 4px;
 }
 
+.hidden {
+  display: none;
+}
+
 .dropdown-content {
   width: calc(100vw - 2em);
   max-width: 300px;

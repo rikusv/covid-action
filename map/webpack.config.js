@@ -27,7 +27,7 @@ module.exports = {
     extensions: [ '.tsx', '.ts', '.js' ],
   },
   output: {
-    filename: 'main-1.js',
+    filename: 'main-2.js',
     path: path.resolve(__dirname, 'dist'),
   },
 };

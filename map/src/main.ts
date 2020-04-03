@@ -10,6 +10,7 @@ import 'leaflet/dist/leaflet.css'
 
 const map = new Map('map', {
   attributionControl: false,
+  scrollWheelZoom: false,
 })
 L.control.attribution({position: 'bottomleft'}).addTo(map)
 
@@ -27,6 +28,13 @@ new TileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map)
 
 window.addEventListener('DOMContentLoaded', () => {
+  if (inIframe()) {
+    const aboutLi = document.getElementById('aboutLi') as HTMLElement
+    aboutLi.classList.add('hidden')
+    const capeTownTopLeft: [number, number] = [-33.444882, 18.027865]
+    const capeTownBottomRight: [number, number] = [-34.539817, 20.659773]
+    map.fitBounds([capeTownTopLeft, capeTownBottomRight])
+  }
   const locationMarkers = new LocationMarkers(map)
   locationMarkers.refresh()
   const filterButton = document.getElementById('filterButton') as HTMLElement
@@ -44,3 +52,11 @@ window.addEventListener('DOMContentLoaded', () => {
     filterPanel.classList.remove('show')
   }
 })
+
+function inIframe(): boolean {
+  try {
+    return window.self !== window.top
+  } catch (error) {
+    return true
+  }
+}
