@@ -1,20 +1,21 @@
-<div *ngIf="user$ | async as user; else showLogin">
+<div *ngIf="authUser$ | async as user; else showLogin">
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">covid-action</a>
+    <a class="navbar-brand">covid-action</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
-        <li routerLinkActive="active" class="nav-item">
+        <li *ngIf="(user$ | async)?.roles?.admin" routerLinkActive="active" class="nav-item">
           <a class="nav-link" routerLink="/locations/add">Add</a>
         </li>
         <li routerLinkActive="active" class="nav-item">
           <a class="nav-link" routerLink="/locations/active">Active</a>
         </li>
-        <li class="nav-item">
+        <!-- TODO -->
+        <!-- <li class="nav-item">
           <a class="nav-link" href="#">Pending</a>
-        </li>
+        </li> -->
         <li class="nav-item">
           <a (click)="logout()" class="nav-link" [routerLink]="">Log out</a>
         </li>
@@ -28,5 +29,7 @@
 
 <ng-template #showLogin>
   <p>Please login.</p>
-  <button (click)="login()" type="button" class="btn btn-primary">Login with Google</button>
+  <button (click)="login()" type="button" class="btn btn-primary">
+    Login with Google
+  </button>
 </ng-template>

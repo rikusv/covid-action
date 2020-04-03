@@ -6,6 +6,7 @@ import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms'
 
 import { Location } from '../../location'
 import { LocationService } from '../../location.service'
+import { UserService } from '../../user.service'
 
 @Component({
   selector: 'app-active-location-edit',
@@ -14,20 +15,18 @@ import { LocationService } from '../../location.service'
 })
 export class ActiveLocationEditComponent implements OnInit {
 
+  user$ = this.userService.user$
   location$: Observable<Location | null>
   locationForm: FormGroup
   allTags: string[] = [
     'hygiene',
-    'food',
-    'etc',
-    'bla',
-    'kjashkjasdhkdhak',
-    'lkdlsakjdlkj'
+    'food'
   ]
 
   constructor(
     private route: ActivatedRoute,
     private locationService: LocationService,
+    private userService: UserService,
     private fb: FormBuilder
   ) { }
 
@@ -58,7 +57,7 @@ export class ActiveLocationEditComponent implements OnInit {
       description: [''],
       email: ['', Validators.email],
       name: ['', Validators.required],
-      telephone: ['+27', Validators.pattern('\\+[0-9]*')],
+      telephone: ['', Validators.pattern('\\+[0-9]*')],
       tags: this.fb.array([]),
       webUrl: ['', Validators.pattern('http.*')],
       whatsAppUrl: ['', Validators.pattern('http.*')],

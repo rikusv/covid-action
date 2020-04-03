@@ -8,7 +8,7 @@ import { UserService } from '../user.service'
 })
 export class LoggedInComponent implements OnInit {
 
-  user$ = this.userService.user$
+  authUser$ = this.userService.authUser$
 
   constructor(
     private userService: UserService

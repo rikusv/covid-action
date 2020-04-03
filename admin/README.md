@@ -2,6 +2,26 @@
 
 [covid-action admin](https://covid-action-admin.web.app) is an Angular app to manage locations on the [covid-action map](../map/).
 
+## Usage
+
+Any user logged in with their Google account, can view locations.
+
+> TODO: add other login methods
+
+The `admin` role is needed to be able add and edit locations. For now, this is assigned very manually:
+
+1. Copy the user's UID (the user must have logged in to [covid-action admin](https://covid-action-admin.web.app) first) from the [Authentication](https://console.firebase.google.com/u/0/project/covid-action/authentication/users) panel in the Firebase Console.
+2. Create a document in the [users collection](https://console.firebase.google.com/u/0/project/covid-action/database/firestore/data~2Fusers) in Firestore, with the `id` equal to the UID, and a `roles` map with the `admin` role:
+    ```json
+    {
+      "roles": {
+        "admin": true
+      }
+    }
+    ```
+
+> TODO: add user management in admin app
+
 ## Development
 
 [Angular CLI](https://github.com/angular/angular-cli) is used for this project. See 'Annexure: Angular CLI' below.

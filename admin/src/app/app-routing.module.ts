@@ -20,7 +20,11 @@ const routes: Routes = [
     children: [
       {
         path: 'add',
-        component: ActiveLocationEditComponent
+        component: ActiveLocationEditComponent,
+        canActivate: [AuthGuard],
+        data: {
+          role: 'admin'
+        }
       },
       {
         path: 'active',

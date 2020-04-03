@@ -8,6 +8,7 @@ import { UserService } from './user.service'
 })
 export class AppComponent {
 
+  authUser$ = this.userService.authUser$
   user$ = this.userService.user$
 
   constructor(
