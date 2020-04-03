@@ -59,6 +59,9 @@ const patchLocations = (
   patchedLocations: any[],
   client: DocumentSnapshot<DocumentData>
 ) => {
+  let createCount = 0
+  let updateCount = 0
+  let noChangeCount = 0
   const resultsPromises = patchedLocations.map(async patchedLocation => {
     patchedLocation.coordinates = new GeoPoint(patchedLocation.coordinates.latitude, patchedLocation.coordinates.longitude)
     const existing = locationCollection
@@ -70,6 +73,7 @@ const patchLocations = (
         return locationCollection.add(patchedLocation)
         .then(async () => {
           await writeLog('info', 'New data written.', patchedLocation, client)
+          createCount += 1
           return 0
         })
         .catch(async error => {
@@ -90,6 +94,7 @@ const patchLocations = (
             new: patchedLocation,
             old: existingLocation
           }, client)
+          noChangeCount += 1
           return 0
         } else {
           return existingSnapshot.ref.update(patchedLocation)
@@ -98,6 +103,7 @@ const patchLocations = (
               new: patchedLocation,
               old: existingLocation
             }, client)
+            updateCount += 1
             return 0
           })
           .catch(async error => {
@@ -132,7 +138,10 @@ const patchLocations = (
       locationCounts: {
         sent: patchedLocations.length,
         errors: errorCount,
-        saved: patchedLocations.length - errorCount
+        created: createCount,
+        updated: updateCount,
+        noChange: noChangeCount
+
       }
     })
   })
