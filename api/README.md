@@ -16,6 +16,8 @@ curl --location --request GET 'https://europe-west1-covid-action.cloudfunctions.
 
 To write a batch of locations, send a `PATCH` request to https://europe-west1-covid-action.cloudfunctions.net/locations with your API key in the `Authorization` header, and a JSON array of locations in the body. **Location fields without values should not be included in the payload, unless the intention if explicitly to delete those fields (they may have manually maintained values).**
 
+> The 'primary key' of the data is `category` + `coordinates` - that is, these 2 fields determine whether new records are create, or existing records updated.
+
 ```curl
 curl --location --request PATCH 'https://europe-west1-covid-action.cloudfunctions.net/locations' \
 --header 'Authorization: <API key>' \

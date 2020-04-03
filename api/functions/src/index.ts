@@ -63,7 +63,7 @@ const patchLocations = (
     patchedLocation.coordinates = new GeoPoint(patchedLocation.coordinates.latitude, patchedLocation.coordinates.longitude)
     const existing = locationCollection
     .where('category', '==', patchedLocation.category)
-    .where('name', '==', patchedLocation.name)
+    .where('coordinates', '==', patchedLocation.coordinates)
     return existing.get()
     .then(async snapshot => {
       if (snapshot.empty) {
