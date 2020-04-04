@@ -6,6 +6,10 @@ At the moment, this consists only of the [functions](./functions). See README.md
 
 ## Usage
 
+The API can be used to create and update locations, and also provides some services to the admin app.
+
+### Batch write locations
+
 > You need to have a covid-action API key to write data.
 
 To get the JSON Schema describing what the array of locations should look like, send a `GET` request to https://europe-west1-covid-action.cloudfunctions.net/locations?schema:
@@ -51,6 +55,14 @@ The response will hopefully look something like this:
         "saved": 1
     }
 }
+```
+
+### Admin app services
+
+Autocomplete address:
+
+```bash
+  curl --location --request GET 'https://europe-west1-covid-action.cloudfunctions.net/placeAutocomplete?input=8%20arch'
 ```
 
 ## Administration
