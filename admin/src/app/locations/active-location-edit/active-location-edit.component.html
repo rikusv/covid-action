@@ -16,7 +16,7 @@
                 Name
               </span>
             </div>
-            <input type="text" formControlName="name" class="form-control">
+            <input type="text" formControlName="name" class="form-control" autocomplete="new-password">
           </div>
 
           <div class="input-group mb-3">
@@ -48,13 +48,43 @@
             </div>
           </div>
 
+          <div class="custom-control custom-switch mb-2">
+            <input (click)="toggleCoordinates($event.target.checked)" type="checkbox" class="custom-control-input" id="customSwitch1">
+            <label class="custom-control-label" for="customSwitch1">
+              Coordinates
+            </label>
+          </div>
+
+          <div *ngIf="!coordinatesToggle" class="input-group mb-0">
+            <div class="input-group-prepend">
+              <span class="input-group-text">
+                Address
+              </span>
+            </div>
+            <input formControlName="address" (focus)="addressInFocus = true" (blur)="addressInFocus = false" class="form-control" autocomplete="new-password">
+          </div>
+
+          <div *ngIf="addressInFocus && addressLoading" class="spinner-border mt-1" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+
+          <ul *ngIf="!coordinatesToggle" class="list-group mb-3">
+            <a  *ngFor="let suggestion of addressSuggestions" (click)="setAddress(suggestion)" class="list-group-item list-group-item-action" [routerLink]="">
+              {{ suggestion.address }}
+            </a>
+          </ul>
+
           <div formGroupName="coordinates" class="input-group mb-3">
             <div class="input-group-prepend">
               <span class="input-group-text">Coordinates</span>
             </div>
-            <input type="text" formControlName="latitude" placeholder="Latitude" class="form-control">
-            <input type="text" formControlName="longitude" placeholder="longitude" class="form-control">
+            <input [readonly]="!coordinatesToggle" type="text" formControlName="latitude" placeholder="Latitude" class="form-control">
+            <input [readonly]="!coordinatesToggle"  type="text" formControlName="longitude" placeholder="longitude" class="form-control">
           </div>
+
+          <!-- If this map is removed, the 'powered by Google' image must be displayed in the autocomplete dropdown. See https://developers.google.com/places/web-service/policies#logo_requirements -->
+          <iframe *ngIf="mapUrl" width="100%" frameborder="0" style="border:0" class="mb-3"
+          [src]="mapUrl" allowfullscreen></iframe>
 
           <div class="input-group mb-3">
             <div class="input-group-prepend">

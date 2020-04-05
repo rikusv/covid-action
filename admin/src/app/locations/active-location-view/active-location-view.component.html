@@ -12,24 +12,30 @@
       </span>
     </h5>
     <p>
-      <span *ngFor="let tag of location.tags" class="badge badge-info mr-1">{{ tag }}</span>
+      <span *ngFor="let tag of location.tags" class="badge badge-info mr-1">
+        {{ tag }}
+      </span>
     </p>
-    <p class="card-text">{{ location.description }}</p>
-    <a *ngIf="location.webUrl" [href]="location.webUrl" target="_blank" class="card-link">
-      Web
-    </a>
-    <a *ngIf="location.whatsAppUrl" [href]="location.whatsAppUrl" target="_blank" class="card-link">
-      WhatsApp
-    </a>
-    <a *ngIf="location.email" [href]="'mailto:' + location.email" target="_blank" class="card-link">
-      {{ location.email }}
-    </a>
-    <a *ngIf="location.telephone" [href]="'tel:' + location.telephone" target="_blank" class="card-link">
-      {{ location.telephone }}
-    </a>
+    <p class="card-text" [class.line-clamp]="!single">
+      {{ location.description }}
+    </p>
     <p>
       <small class="text-muted">Coordinates: {{ location.coordinates.latitude + ', ' + location.coordinates.longitude }}
       </small>
     </p>
+  </div>
+  <div *ngIf="single" class="list-group list-group-flush">
+    <a *ngIf="location.webUrl" [href]="location.webUrl" target="_blank" class="list-group-item list-group-item-action">
+      Web
+    </a>
+    <a *ngIf="location.whatsAppUrl" [href]="location.whatsAppUrl" target="_blank" class="list-group-item list-group-item-action">
+      WhatsApp
+    </a>
+    <a *ngIf="location.email" [href]="'mailto:' + location.email" target="_blank" class="list-group-item list-group-item-action">
+      {{ location.email }}
+    </a>
+    <a *ngIf="location.telephone" [href]="'tel:' + location.telephone" target="_blank" class="list-group-item list-group-item-action">
+      {{ location.telephone }}
+    </a>
   </div>
 </div>

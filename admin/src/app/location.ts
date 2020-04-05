@@ -1,13 +1,12 @@
 export class Location {
-
   id: string
+  address: string
+  area: string
   category: string
-  coordinates: {
-    latitude?: number
-    longitude?: number
-  } = {}
+  coordinates: Coordinates
   description: string
   email: string
+  googlePlaceId: string
   name: string
   tags: string[] = []
   telephone: string
@@ -17,4 +16,9 @@ export class Location {
   constructor(id: string) {
     this.id = id
   }
+}
+
+export interface Coordinates {
+  latitude: number
+  longitude: number
 }
