@@ -5,24 +5,38 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a href="https://github.com/rikusv/covid-action" target="_blank" class="nav-link">
+          About
+        </a>
+      </li>
       <ng-container *ngIf="authUser$ | async">
         <li *ngIf="(user$ | async)?.roles?.admin" routerLinkActive="active" class="nav-item">
-          <a class="nav-link" routerLink="/locations/add">Add</a>
+          <a class="nav-link" routerLink="/locations/add">
+            Add
+          </a>
         </li>
         <li *ngIf="(user$ | async)?.roles?.admin" routerLinkActive="active" class="nav-item">
-          <a class="nav-link" routerLink="/locations/active">Active</a>
+          <a class="nav-link" routerLink="/locations/active">
+            Active
+          </a>
         </li>
         <!-- TODO -->
         <!-- <li class="nav-item">
-          <a class="nav-link" href="#">Pending</a>
+          <a class="nav-link" href="#">
+          Pending
+        </a>
         </li> -->
         <li class="nav-item">
-          <a (click)="logout()" class="nav-link" [routerLink]="">Log out</a>
+          <a (click)="logout()" class="nav-link" [routerLink]="">
+            Log out
+          </a>
         </li>
       </ng-container>
     </ul>
   </div>
 </nav>
+
 <div class="container-fluid">
   <router-outlet *ngIf="authUser$ | async; else showLogin"></router-outlet>
 </div>

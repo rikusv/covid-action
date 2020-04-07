@@ -1,1 +1,9 @@
-<h1>Hello {{ (authUser$ | async)?.displayName }}!</h1>
+<h1 class="display-4">Hello {{ (authUser$ | async)?.displayName }}</h1>
+
+<p>
+  Later, there may be useful things like worklists here.
+</p>
+
+<p>
+  For now, one can <a routerLink="/locations/active">view and edit</a> or <a routerLink="/locations/add">add</a> locations.
+</p>
