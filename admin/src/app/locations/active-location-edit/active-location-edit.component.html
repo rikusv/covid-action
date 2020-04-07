@@ -17,6 +17,9 @@
               </span>
             </div>
             <input type="text" formControlName="name" class="form-control" autocomplete="new-password">
+            <div class="invalid-feedback" [class.active]="name.errors?.required && locationForm.touched">
+              Name is mandatory.
+            </div>
           </div>
 
           <div class="input-group mb-3">
@@ -29,6 +32,9 @@
               <option value="W-CAN">WhatsApp Community Action Network</option>
               <option value="Pamphlets">Pamphlet Collection</option>
             </select>
+            <div class="invalid-feedback" [class.active]="category.errors?.required && locationForm.touched">
+              Category is mandatory.
+            </div>
           </div>
 
           <div formArrayName="tags" class="form-group">
@@ -102,6 +108,9 @@
               </span>
             </div>
             <input type="url" formControlName="webUrl" class="form-control">
+            <div class="invalid-feedback" [class.active]="webUrl.errors?.pattern && locationForm.touched">
+              Enter a full URL including http/https
+            </div>
           </div>
 
           <div class="input-group mb-3">
@@ -111,6 +120,9 @@
               </span>
             </div>
             <input type="url" formControlName="whatsAppUrl" class="form-control">
+            <div class="invalid-feedback" [class.active]="whatsAppUrl.errors?.pattern && locationForm.touched">
+              Enter a full URL starting with http/https://...
+            </div>
           </div>
 
           <div class="input-group mb-3">
@@ -120,6 +132,9 @@
               </span>
             </div>
             <input type="email" formControlName="email" class="form-control">
+            <div class="invalid-feedback" [class.active]="email.errors?.email && locationForm.touched">
+              Enter a valid email address
+            </div>
           </div>
 
           <div class="input-group mb-3">
@@ -128,7 +143,10 @@
                 Telephone
               </span>
             </div>
-            <input type="text" formControlName="telephone" placeholder="+27..." class="form-control">
+            <input type="text" formControlName="telephone" class="form-control">
+            <div class="invalid-feedback" [class.active]="telephone.errors?.pattern && locationForm.touched">
+              Enter a full telephone number starting with '+'
+            </div>
           </div>
 
           <button class="col" type="submit" [disabled]="!locationForm.valid" class="btn btn-primary">

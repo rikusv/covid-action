@@ -3,7 +3,7 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser'
 import { ActivatedRoute } from '@angular/router'
 import { Observable, of } from 'rxjs'
 import { debounceTime, switchMap, tap, filter } from 'rxjs/operators'
-import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms'
+import { AbstractControl, FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms'
 import { environment } from '../../../environments/environment'
 
 import { Location, Coordinates } from '../../location'
@@ -106,6 +106,30 @@ export class ActiveLocationEditComponent implements OnInit {
     if (location.tags) {
       location.tags.forEach(tag => this.addTag(tag))
     }
+  }
+
+  get category(): AbstractControl {
+    return this.locationForm.get('category')
+  }
+
+  get email(): AbstractControl {
+    return this.locationForm.get('email')
+  }
+
+  get name(): AbstractControl {
+    return this.locationForm.get('name')
+  }
+
+  get telephone(): AbstractControl {
+    return this.locationForm.get('telephone')
+  }
+
+  get webUrl(): AbstractControl {
+    return this.locationForm.get('webUrl')
+  }
+
+  get whatsAppUrl(): AbstractControl {
+    return this.locationForm.get('whatsAppUrl')
   }
 
   get tags(): FormArray {
