@@ -5,6 +5,8 @@ import { sendError } from './utils'
 
 const client = new Client()
 
+// TODO: refactor the below to avoid all the duplicate code (constuct request -> run request (single function) -> process request)
+
 export const placeDetails = functions.region('europe-west1').https.onRequest(async (request, response) => {
   if (relevant(request, response)) {
      const placeId: string = request.query.placeId
