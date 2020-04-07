@@ -19,10 +19,10 @@ export class LocationMarkers {
     tags: null,
   }
   private colors = [
-    '#ff0000',
+    '255,0,0',
+    '0,255,0',
+    '0,0,255',
     '#008800',
-    '#0000ff',
-    '#00ff00',
     '#000088',
     '#888800',
     '#88ff00',
@@ -53,9 +53,18 @@ export class LocationMarkers {
         </ul>
         ${location.tags.map((tag) => `<span class="popup-tag">${tag}</span>`).join('')}`)
       if (!this.groups[location.category]) {
-        this.groupColors[location.category] = this.colors.shift() as string
-        this.groups[location.category] = L.markerClusterGroup().on(
-          'layeradd', (event) => event.layer.setStyle({color: this.groupColors[location.category]}),
+        const color = this.colors.shift() as string
+        this.groupColors[location.category] = color
+        this.groups[location.category] = L.markerClusterGroup({
+          iconCreateFunction: (cluster) => {
+            return new L.DivIcon({
+              className: 'marker-cluster',
+              html: `<div style="background-color: ${this.color(color, 0.6)}"><span>${cluster.getChildCount()}</span></div>`,
+              iconSize: new L.Point(40, 40),
+            })
+          },
+        }).on(
+          'layeradd', (event) => event.layer.setStyle({color: this.color(color)}),
         ).addTo(this.map)
       }
       location.tags.forEach((tag) => {
@@ -106,7 +115,7 @@ export class LocationMarkers {
     container.innerHTML = ''
     li = document.createElement('li')
     li.dataset.match = 'all'
-    li.classList.add('active')
+    li.classList.add('active', 'all')
     li.onclick = () => this.filter(type)
     anchor = document.createElement('a')
     anchor.innerHTML = 'all'
@@ -123,7 +132,7 @@ export class LocationMarkers {
       if (type === 'categories') {
         span = document.createElement('span')
         span.innerHTML = 'o '
-        span.style.color = this.groupColors[item]
+        span.style.color = this.color(this.groupColors[item])
         anchor.prepend(span)
       }
       li.appendChild(anchor)
@@ -142,6 +151,11 @@ export class LocationMarkers {
         element!.classList.remove('active')
       }
     }
+  }
+
+  private color(rgb: string, opacity?: number): string {
+    opacity = opacity || 1
+    return `rgba(${rgb},${opacity})`
   }
 
 }

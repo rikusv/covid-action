@@ -2,24 +2,41 @@
 <html lang="en" dir="ltr">
 <head>
   <meta charset="utf-8">
-  <title></title>
+  <title>covid-action Map</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <link rel="stylesheet" href="./style.css">
 </head>
 <body>
   <div id="menu" class="menu show">
     <ul>
-      <li id="aboutLi">
-        <a>
-          About
-        </a>
-      </li>
-      <li class="toggle">
+      <li class="toggle" data-panel="filterPanel">
         <a id="filterButton">
           Filter
         </a>
       </li>
+      <li id="aboutLi" class="toggle" data-panel="aboutPanel">
+        <a>
+          About
+        </a>
+      </li>
     </ul>
+  </div>
+  <div id="aboutPanel" class="dropdown-content menu">
+    <div>
+      <ul>
+        <li>
+          <a href="https://www.onelovesa.com/" target="_blank">
+            One Love SA
+          </a>
+        </li>
+        <li>
+          <a href="https://github.com/rikusv/covid-action" target="_blank">
+            Repo
+          </a>
+        </li>
+        <li><a>X</a></li>
+      </ul>
+    </div>
   </div>
   <div id="filterPanel" class="dropdown-content menu">
     <div>
@@ -35,6 +52,6 @@
   </div>
   <div id="map"/>
 
-  <script src="main-2.js"></script>
+  <script src="main-3.js"></script>
 </body>
 </html>

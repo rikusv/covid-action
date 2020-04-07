@@ -1,3 +1,5 @@
+/* TODO: this really needs to be organized a bit... */
+
 html, body, #map {
   height: 100%;
   width: 100vw;
@@ -17,7 +19,7 @@ body {
   right: 0;
   bottom: 0;
   margin: 1em;
-  background-color: rgba(0,0,0,0.5);
+  background-color: rgba(0,0,0,0.7);
   border-radius: 4px;
 }
 
@@ -58,25 +60,13 @@ ul {
 }
 
 .dropdown-content {
-  width: calc(100vw - 2em);
-  max-width: 300px;
   position: absolute;
   right: 0;
   bottom: 0;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-/*   background-color: white; */
   border-radius: 4px;
   z-index: 999;
 }
-
-.dropdown-content div {
-  border-top: rgba(0,0,0,0.5) 1px solid;
-}
-
-
-/* #filterPanel.show {
-  display: block;
-} */
 
 .dropdown-content a {
   display: block;
@@ -105,4 +95,12 @@ ul {
 
 .popup-tag + .popup-tag::before {
   content: ' + ';
+}
+
+ul.links li {
+  margin-bottom: 0.5em;
+}
+
+li.all {
+  border-right: 1px solid rgba(255,255,255,0.5);
 }

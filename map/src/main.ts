@@ -10,7 +10,6 @@ import 'leaflet/dist/leaflet.css'
 
 const map = new Map('map', {
   attributionControl: false,
-  scrollWheelZoom: false,
 })
 L.control.attribution({position: 'bottomleft'}).addTo(map)
 
@@ -37,19 +36,25 @@ window.addEventListener('DOMContentLoaded', () => {
   }
   const locationMarkers = new LocationMarkers(map)
   locationMarkers.refresh()
-  const filterButton = document.getElementById('filterButton') as HTMLElement
-  filterButton.onclick = (event: Event) => {
-    event.stopPropagation()
-    const menu = document.getElementById('menu') as HTMLElement
-    const filterPanel = document.getElementById('filterPanel') as HTMLElement
-    menu.classList.remove('show')
-    filterPanel.classList.add('show')
-  }
+  const menuButtons = Array.from(document.getElementsByClassName('toggle'))
+  menuButtons.forEach((button) => {
+    (button as HTMLElement).onclick = (event: Event) => {
+      event.stopPropagation()
+      const menu = document.getElementById('menu') as HTMLElement
+      const panelId = (button as HTMLElement).dataset.panel as string
+      const panel = document.getElementById(panelId) as HTMLElement
+      menu.classList.remove('show')
+      panel.classList.add('show')
+    }
+  })
   document.body.onclick = () => {
     const menu = document.getElementById('menu') as HTMLElement
-    const filterPanel = document.getElementById('filterPanel') as HTMLElement
+    menuButtons.forEach((button) => {
+      const panelId = (button as HTMLElement).dataset.panel as string
+      const panel = document.getElementById(panelId) as HTMLElement
+      panel.classList.remove('show')
+    })
     menu.classList.add('show')
-    filterPanel.classList.remove('show')
   }
 })
 
