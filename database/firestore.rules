@@ -8,10 +8,10 @@ service cloud.firestore {
       allow read: if true;
       allow write: if request.auth.uid != null &&
         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.roles.admin == true &&
-      	request.resource.data.category is string &&
+        request.resource.data.category is string && request.resource.data.category.size() > 0 &&
       	request.resource.data.coordinates is latlng &&
         request.resource.data.description is string &&
-        request.resource.data.name is string &&
+        request.resource.data.name is string && request.resource.data.name.size() > 0 &&
         request.resource.data.tags is list;
     }
     match /users/{user} {
