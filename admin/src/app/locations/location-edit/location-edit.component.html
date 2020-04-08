@@ -1,14 +1,18 @@
 <div class="row">
 
-  <div *ngIf="(user$ | async)?.roles?.admin" class="col-lg-6">
+  <!-- For now, only admin users can edit, but anyone can submit -->
+  <div *ngIf="(user$ | async)?.roles?.admin || (location$ | async) === null" class="col-lg-6">
 
     <div class="card mt-3">
 
       <div class="card-body">
 
-        <form [formGroup]="locationForm" (ngSubmit)="save()">
+        <form [formGroup]="locationForm">
 
-          <h5 class="card-title">Edit</h5>
+          <h5 class="card-title">
+            {{ heading[0] }}
+            <small class="text-muted">{{ heading[1] }}</small>
+          </h5>
 
           <div class="input-group mb-3">
             <div class="input-group-prepend">
@@ -86,10 +90,13 @@
             </div>
             <input [readonly]="!coordinatesToggle" type="text" formControlName="latitude" placeholder="Latitude" class="form-control">
             <input [readonly]="!coordinatesToggle"  type="text" formControlName="longitude" placeholder="longitude" class="form-control">
+            <div class="invalid-feedback" [class.active]="(latitude.errors || longitude.errors) && locationForm.touched">
+              Valid coordinates are mandatory.
+            </div>
           </div>
 
           <!-- If this map is removed, the 'powered by Google' image must be displayed in the autocomplete dropdown. See https://developers.google.com/places/web-service/policies#logo_requirements -->
-          <iframe *ngIf="mapUrl" width="100%" frameborder="0" style="border:0" class="mb-3"
+          <iframe *ngIf="showMap" width="100%" frameborder="0" style="border:0" class="mb-3"
           [src]="mapUrl" allowfullscreen></iframe>
 
           <div class="input-group mb-3">
@@ -149,21 +156,41 @@
             </div>
           </div>
 
-          <button class="col" type="submit" [disabled]="!locationForm.valid" class="btn btn-primary">
-            Save
-          </button>
-
         </form>
 
       </div>
 
     </div>
 
+    <div *ngIf="(alert$ | async) as alert" class="alert my-3" [ngClass]="'alert-' + alert?.type" role="alert">
+      {{ alert?.text }}
+    </div>
+
+    <button *ngIf="path === 'submit'" (click)="submit()" [disabled]="!locationForm.valid || locationForm.pristine" class="btn btn-primary m-2">
+      Submit
+    </button>
+
+    <ng-container *ngIf="(user$ | async)?.roles?.admin && collection === 'pending-locations'">
+      <button (click)="save()" [disabled]="!locationForm.valid || locationForm.pristine" class="btn btn-primary m-2">
+        Save
+      </button>
+      <button (click)="delete()" class="btn btn-danger m-2">
+        Delete
+      </button>
+
+    </ng-container>
+
+    <button *ngIf="(user$ | async)?.roles?.admin && path !== 'submit'" (click)="publish()" [disabled]="!locationForm.valid || (locationForm.pristine && collection === 'locations')" class="btn btn-primary m-2">
+      Publish
+    </button>
+
   </div>
 
   <div class="col-lg-6">
-    <app-active-location-view [location]="location$ | async" [single]="true">
-    </app-active-location-view>
+
+    <app-location [location]="location$ | async" [collection]="collection" [single]="true">
+    </app-location>
+
   </div>
 
 </div>

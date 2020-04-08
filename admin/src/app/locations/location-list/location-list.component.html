@@ -1,5 +1,5 @@
 <div class="row">
   <div *ngFor="let location of locations$ | async" class="col-sm-6">
-    <app-active-location-view [location]="location"></app-active-location-view>
+    <app-location [location]="location" [collection]="collection"></app-location>
   </div>
 </div>

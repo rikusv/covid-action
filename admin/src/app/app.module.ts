@@ -11,18 +11,20 @@ import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
 import { LoggedInComponent } from './logged-in/logged-in.component'
 import { LocationsComponent } from './locations/locations.component'
-import { ActiveLocationEditComponent } from './locations/active-location-edit/active-location-edit.component'
-import { ActiveLocationViewComponent } from './locations/active-location-view/active-location-view.component'
-import { ActiveLocationListComponent } from './locations/active-location-list/active-location-list.component'
+import { LocationEditComponent } from './locations/location-edit/location-edit.component'
+import { LocationViewComponent } from './locations/location-view/location-view.component'
+import { LocationListComponent } from './locations/location-list/location-list.component'
+import { LocationComponent } from './locations/location/location.component'
 
 @NgModule({
   declarations: [
     AppComponent,
     LoggedInComponent,
     LocationsComponent,
-    ActiveLocationEditComponent,
-    ActiveLocationViewComponent,
-    ActiveLocationListComponent
+    LocationEditComponent,
+    LocationViewComponent,
+    LocationListComponent,
+    LocationComponent
   ],
   imports: [
     BrowserModule,

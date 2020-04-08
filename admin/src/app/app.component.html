@@ -1,38 +1,42 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand">covid-action</a>
+  <a routerLink="/" class="navbar-brand">covid-action</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a href="https://github.com/rikusv/covid-action" target="_blank" class="nav-link">
-          About
-        </a>
-      </li>
       <ng-container *ngIf="authUser$ | async">
-        <li *ngIf="(user$ | async)?.roles?.admin" routerLinkActive="active" class="nav-item">
+        <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-item">
+          <a class="nav-link" routerLink="/locations">
+            Active
+          </a>
+        </li>
+        <li *ngIf="(user$ | async)?.roles?.admin" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-item">
           <a class="nav-link" routerLink="/locations/add">
             Add
           </a>
         </li>
-        <li *ngIf="(user$ | async)?.roles?.admin" routerLinkActive="active" class="nav-item">
-          <a class="nav-link" routerLink="/locations/active">
-            Active
+        <li *ngIf="(user$ | async)?.roles?.admin" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-item">
+          <a class="nav-link" routerLink="/pending-locations">
+            Pending
           </a>
         </li>
-        <!-- TODO -->
-        <!-- <li class="nav-item">
-          <a class="nav-link" href="#">
-          Pending
-        </a>
-        </li> -->
+        <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-item">
+          <a class="nav-link" routerLink="/locations/submit">
+            Submit
+          </a>
+        </li>
         <li class="nav-item">
           <a (click)="logout()" class="nav-link" [routerLink]="">
             Log out
           </a>
         </li>
       </ng-container>
+      <li class="nav-item">
+        <a href="https://github.com/rikusv/covid-action" target="_blank" class="nav-link">
+          About
+        </a>
+      </li>
     </ul>
   </div>
 </nav>
@@ -43,10 +47,12 @@
 
 <ng-template #showLogin>
   <div class="jumbotron">
-    <h1 class="display-4">Admin</h1>
+    <h1 class="display-4">Data for the map</h1>
     <p class="lead">This is where data for the <a href="https://covid-action-map.web.app/" target="_blank">covid-action map</a> can be maintained.</p>
     <hr class="my-4">
     <p>You need to please log in though.</p>
-    <button (click)="login()" type="button" class="btn btn-primary btn-lg">Log in with Google</button>
+    <button (click)="login()" type="button" class="btn btn-primary btn-lg">
+      Log in with Google
+    </button>
   </div>
 </ng-template>

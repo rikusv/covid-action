@@ -1,9 +1,15 @@
-<h1 class="display-4">Hello {{ (authUser$ | async)?.displayName }}</h1>
-
-<p>
-  Later, there may be useful things like worklists here.
-</p>
-
-<p>
-  For now, one can <a routerLink="/locations/active">view and edit</a> or <a routerLink="/locations/add">add</a> locations.
-</p>
+<div class="jumbotron">
+  <h1 class="display-4">Hi {{ (authUser$ | async)?.displayName }}</h1>
+  <p class="lead">This is where data for the <a href="https://covid-action-map.web.app/" target="_blank">covid-action map</a> can be maintained.</p>
+  <hr class="my-4">
+  <ng-container *ngIf="(user$ | async)?.roles?.admin">
+    <p *ngIf="(pendingLocationCount$ | async) > 0">
+      There are <a routerLink="/pending-locations">{{ (pendingLocationCount$ | async) }} pending locations</a> to publish.
+    </p>
+  </ng-container>
+  <ng-container *ngIf="(user$ | async)?.roles?.admin !== true">
+    <button routerLink="/locations/submit" class="btn btn-primary my-3">
+      Submit a location
+    </button>
+  </ng-container>
+</div>

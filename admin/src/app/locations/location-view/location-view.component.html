@@ -1,0 +1,6 @@
+<app-location [location]="location$ | async" [collection]="collection" [single]="true">
+</app-location>
+
+<button *ngIf="(user$ | async)?.roles?.admin" routerLink="edit" class="btn btn-primary m-2">
+  Edit
+</button>

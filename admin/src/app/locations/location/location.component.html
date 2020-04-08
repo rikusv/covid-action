@@ -1,7 +1,8 @@
 <div *ngIf="location" class="card mt-3">
+
   <div class="card-body">
     <h5 class="card-title">
-      <a *ngIf="!single; else singleLocationView" [routerLink]="['/locations', 'active', location.id]">
+      <a *ngIf="!single; else singleLocationView" [routerLink]="['/', collection, location.id]">
         {{ location.name }}
       </a>
       <ng-template #singleLocationView>
@@ -24,6 +25,7 @@
       </small>
     </p>
   </div>
+
   <div *ngIf="single" class="list-group list-group-flush">
     <a *ngIf="location.webUrl" [href]="location.webUrl" target="_blank" class="list-group-item list-group-item-action">
       Web
@@ -38,4 +40,5 @@
       {{ location.telephone }}
     </a>
   </div>
+
 </div>

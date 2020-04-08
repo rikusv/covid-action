@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core'
+
 import { UserService } from '../user.service'
+import { LocationService } from '../location.service'
 
 @Component({
   selector: 'app-logged-in',
@@ -8,10 +10,13 @@ import { UserService } from '../user.service'
 })
 export class LoggedInComponent implements OnInit {
 
+  user$ = this.userService.user$
   authUser$ = this.userService.authUser$
+  pendingLocationCount$ = this.locationService.getLocationCount$('pending-locations')
 
   constructor(
-    private userService: UserService
+    private userService: UserService,
+    private locationService: LocationService
   ) {}
 
   ngOnInit(): void {

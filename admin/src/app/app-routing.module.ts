@@ -5,8 +5,9 @@ import { AuthGuard } from './auth.guard'
 
 import { LoggedInComponent } from './logged-in/logged-in.component'
 import { LocationsComponent } from './locations/locations.component'
-import { ActiveLocationEditComponent } from './locations/active-location-edit/active-location-edit.component'
-import { ActiveLocationListComponent } from './locations/active-location-list/active-location-list.component'
+import { LocationListComponent } from './locations/location-list/location-list.component'
+import { LocationViewComponent } from './locations/location-view/location-view.component'
+import { LocationEditComponent } from './locations/location-edit/location-edit.component'
 
 const routes: Routes = [
   {
@@ -15,36 +16,64 @@ const routes: Routes = [
   },
   {
     path: 'locations',
+    data: {
+      collection: 'locations'
+    },
     component: LocationsComponent,
     canActivate: [AuthGuard],
     children: [
       {
+        path: '',
+        component: LocationListComponent
+      },
+      {
+        path: 'submit',
+        component: LocationEditComponent
+      },
+      {
         path: 'add',
-        component: ActiveLocationEditComponent,
+        component: LocationEditComponent,
         canActivate: [AuthGuard],
         data: {
           role: 'admin'
         }
       },
       {
-        path: 'active',
-        children: [
-          {
-            path: '',
-            component: ActiveLocationListComponent
-          },
-          {
-            path: ':id',
-            component: ActiveLocationEditComponent
-          }
-        ]
+        path: ':id',
+        component: LocationViewComponent
+      },
+      {
+        path: ':id/edit',
+        component: LocationEditComponent,
+        canActivate: [AuthGuard],
+        data: {
+          role: 'admin'
+        }
+      }
+    ]
+  },
+  {
+    path: 'pending-locations',
+    canActivate: [AuthGuard],
+    data: {
+      role: 'admin',
+      collection: 'pending-locations'
+    },
+    children: [
+      {
+        path: '',
+        component: LocationListComponent
+      },
+      {
+        path: ':id',
+        component: LocationEditComponent
       }
     ]
   }
 ]
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {onSameUrlNavigation: 'reload'})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
