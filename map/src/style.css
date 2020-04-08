@@ -19,7 +19,7 @@ body {
   right: 0;
   bottom: 0;
   margin: 1em;
-  background-color: rgba(0,0,0,0.7);
+  background-color: rgba(0,0,0,0.6);
   border-radius: 4px;
 }
 
@@ -52,6 +52,7 @@ ul {
 
 .menu li a:hover {
   background-color: red;
+  color: white;
   border-radius: 4px;
 }
 
@@ -71,14 +72,21 @@ ul {
 .dropdown-content a {
   display: block;
   text-transform: capitalize;
-  color: rgba(0,0,0,0.8);
   text-decoration: none;
   text-align: center;
   border-radius: 4px;
 }
 
-.dropdown-content a.active {
-  background-color: lightgrey;
+.dropdown-content li a {
+  color: rgba(255,255,255,0.7);
+}
+
+.dropdown-content li.active a {
+  color: white;
+}
+
+.dropdown-content li.active {
+  background-color: rgba(0,0,0,0.3);
 }
 
 .popup-category {
