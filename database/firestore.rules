@@ -14,6 +14,19 @@ service cloud.firestore {
         request.resource.data.name is string && request.resource.data.name.size() > 0 &&
         request.resource.data.tags is list;
     }
+    match /pending-locations/{location} {
+      allow read: if get(/databases/$(database)/documents/users/$(request.auth.uid)).data.roles.admin == true;
+      allow create: if request.auth.uid != null &&
+        request.resource.data.category is string && request.resource.data.category.size() > 0 &&
+      	request.resource.data.coordinates is latlng &&
+        request.resource.data.description is string &&
+        request.resource.data.name is string && request.resource.data.name.size() > 0 &&
+        request.resource.data.tags is list;
+      allow update: if request.auth.uid != null &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.roles.admin == true
+      allow delete: if request.auth.uid != null &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.roles.admin == true
+    }
     match /users/{user} {
       allow read: if request.auth.uid == user
     }
