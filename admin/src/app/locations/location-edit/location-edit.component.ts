@@ -6,7 +6,7 @@ import { debounceTime, switchMap, tap, filter, take } from 'rxjs/operators'
 import { AbstractControl, FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms'
 import { environment } from '../../../environments/environment'
 
-import { Location, Collection, Coordinates } from '../../location'
+import { Location, Collection } from '../../location'
 import { LocationService } from '../../location.service'
 import { MapService } from '../../map.service'
 import { PlaceSuggestion } from '../../place-suggestion'
@@ -99,8 +99,10 @@ export class LocationEditComponent implements OnInit {
         this.addressLoading = false
       })
     ).subscribe()
-    this.locationForm.get('coordinates').valueChanges.pipe(
-      tap(value => this.setMapUrl(value))
+    combineLatest(this.latitude.valueChanges, this.longitude.valueChanges).pipe(
+      tap(([latitude, longitude]) => {
+        this.setMapUrl(latitude, longitude)
+      })
     ).subscribe()
   }
 
@@ -144,6 +146,10 @@ export class LocationEditComponent implements OnInit {
     }
   }
 
+  get address(): AbstractControl {
+    return this.locationForm.get('address')
+  }
+
   get category(): AbstractControl {
     return this.locationForm.get('category')
   }
@@ -158,6 +164,10 @@ export class LocationEditComponent implements OnInit {
 
   get email(): AbstractControl {
     return this.locationForm.get('email')
+  }
+
+  get googlePlaceId(): AbstractControl {
+    return this.locationForm.get('googlePlaceId')
   }
 
   get name(): AbstractControl {
@@ -185,8 +195,7 @@ export class LocationEditComponent implements OnInit {
     return this.allTags.filter(tag => !usedTags.includes(tag))
   }
 
-  setMapUrl(coordinates: Coordinates) {
-    const {latitude, longitude} = coordinates
+  setMapUrl(latitude: number, longitude: number) {
     if (!latitude || !longitude) {
       this.mapUrl = this.sanitizer.bypassSecurityTrustResourceUrl('')
       this.showMap = false
@@ -211,8 +220,8 @@ export class LocationEditComponent implements OnInit {
 
   setAddress(suggestion: PlaceSuggestion) {
     this.selectedAddress = suggestion.address
-    this.locationForm.get('address').setValue(suggestion.address)
-    this.locationForm.get('googlePlaceId').setValue(suggestion.placeId)
+    this.address.setValue(suggestion.address)
+    this.googlePlaceId.setValue(suggestion.placeId)
     this.addressSuggestions = []
     this.mapService.placeDetails(suggestion.placeId).pipe(
       tap(coordinates => this.locationForm.get('coordinates').setValue(coordinates))
