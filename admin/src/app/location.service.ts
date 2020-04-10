@@ -18,6 +18,36 @@ export class LocationService {
     private userService: UserService
   ) { }
 
+  get categories(): string[] {
+    return [
+      'Care Organisation',
+      'Drop-off Point',
+      'Feeding Scheme',
+      'Food Distribution',
+      'Other',
+      'Shelter',
+      'WhatsApp Group',
+    ]
+  }
+
+  get tags(): string[] {
+    return [
+      'animal',
+      'clothes',
+      'Corona Care',
+      'disability',
+      'donate',
+      'elderly',
+      'food',
+      'fundraiser',
+      'homeless',
+      'hygiene',
+      'Operation Hunger',
+      'volunteer',
+      'youth'
+    ]
+  }
+
   getLocationCount$(collection: Collection): Observable<number> {
     const locationsRef: AngularFirestoreCollection = this.angularFirestore.collection<Location>(collection)
     return locationsRef.snapshotChanges().pipe(

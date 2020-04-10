@@ -31,10 +31,9 @@
               <label class="input-group-text">Category</label>
             </div>
             <select formControlName="category" class="custom-select">
-              <option value="Support">Support Service</option>
-              <option value="CAG">Community Action Group</option>
-              <option value="W-CAN">WhatsApp Community Action Network</option>
-              <option value="Pamphlets">Pamphlet Collection</option>
+              <option *ngFor="let option of categories" [value]="option">
+                {{ option }}
+              </option>
             </select>
             <div class="invalid-feedback" [class.active]="category.errors?.required && locationForm.touched">
               Category is mandatory.

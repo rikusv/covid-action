@@ -26,10 +26,8 @@ export class LocationEditComponent implements OnInit {
   path: string
   collection: Collection
   locationForm: FormGroup
-  allTags: string[] = [
-    'hygiene',
-    'food'
-  ]
+  categories = this.locationService.categories
+  allTags = this.locationService.tags
   addressInFocus = false
   addressLoading = false
   addressSuggestions: PlaceSuggestion[] = []
