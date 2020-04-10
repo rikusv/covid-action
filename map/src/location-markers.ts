@@ -22,10 +22,14 @@ export class LocationMarkers {
     '255,0,0',
     '0,255,0',
     '0,0,255',
-    '#008800',
-    '#000088',
-    '#888800',
-    '#88ff00',
+    '255,255,0',
+    '0,255,255',
+    '255,0,255',
+    '128,0,0',
+    '0,128,0',
+    '128,0,128',
+    '0,128,128',
+    '0,0,128',
   ]
   private markers: ILocation[] = []
   private map: Map
@@ -118,7 +122,7 @@ export class LocationMarkers {
     li.classList.add('active', 'all')
     li.onclick = () => this.filter(type)
     anchor = document.createElement('a')
-    anchor.innerHTML = 'all'
+    anchor.innerHTML = `all ${type}`
     li.appendChild(anchor)
     container.appendChild(li)
     Object.keys(this[type]).forEach((item) => {
