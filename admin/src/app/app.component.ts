@@ -1,4 +1,5 @@
 import { Component } from '@angular/core'
+
 import { UserService } from './user.service'
 
 @Component({
@@ -15,9 +16,6 @@ export class AppComponent {
     private userService: UserService
   ) {}
 
-  login() {
-    this.userService.login()
-  }
   logout() {
     this.userService.logout()
   }

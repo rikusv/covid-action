@@ -1,0 +1,27 @@
+<div class="input-group mb-3">
+  <input type="text" class="form-control" [formControl]="phoneNumber" placeholder="+27">
+  <div class="input-group-append">
+    <span *ngIf="phoneNumber.errors?.pattern" class="input-group-text text-danger">
+      Enter a full telephone number starting with '+'
+    </span>
+    <button *ngIf="!phoneNumber.errors?.pattern" (click)="loginWithPhone()" class="btn btn-outline-primary" type="button" >
+      Log in by Phone
+    </button>
+  </div>
+</div>
+<div id="recaptcha-container" class="mb-3"></div>
+<div *ngIf="confirmationResult$ | async as confirmationResult" class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text">Verification code</span>
+  </div>
+  <input type="text" class="form-control" [formControl]="verificationCode" placeholder="Code that was sent to your mobile device">
+  <div class="input-group-append">
+    <button (click)="loginWithPhoneConfirm(confirmationResult)" class="btn btn-outline-primary" type="button">
+      Confirm
+    </button>
+  </div>
+</div>
+
+<button (click)="loginWithGoogle()" type="button" class="btn btn-outline-primary my-2">
+  Log in with Google
+</button>

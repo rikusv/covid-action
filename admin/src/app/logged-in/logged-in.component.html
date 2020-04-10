@@ -1,5 +1,5 @@
 <div class="jumbotron">
-  <h1 class="display-4">Hi {{ (authUser$ | async)?.displayName }}</h1>
+  <h1 class="display-4">Hi {{ (authUser$ | async)?.displayName || (authUser$ | async)?.phoneNumber }}</h1>
   <p class="lead">This is where data for the <a href="https://covid-action-map.web.app/" target="_blank">covid-action map</a> can be maintained.</p>
   <hr class="my-4">
   <ng-container *ngIf="(user$ | async)?.roles?.admin">
@@ -7,7 +7,7 @@
       There are <a routerLink="/pending-locations">{{ (pendingLocationCount$ | async) }} pending locations</a> to publish.
     </p>
   </ng-container>
-  <ng-container *ngIf="(user$ | async)?.roles?.admin !== true">
+  <ng-container *ngIf="authUser$ | async">
     <button routerLink="/locations/submit" class="btn btn-primary my-3">
       Submit a location
     </button>

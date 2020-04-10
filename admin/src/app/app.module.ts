@@ -15,6 +15,7 @@ import { LocationEditComponent } from './locations/location-edit/location-edit.c
 import { LocationViewComponent } from './locations/location-view/location-view.component'
 import { LocationListComponent } from './locations/location-list/location-list.component'
 import { LocationComponent } from './locations/location/location.component'
+import { LoginComponent } from './login/login.component'
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { LocationComponent } from './locations/location/location.component'
     LocationEditComponent,
     LocationViewComponent,
     LocationListComponent,
-    LocationComponent
+    LocationComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
