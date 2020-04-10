@@ -14,7 +14,13 @@
     "properties": {
       "category": {
         "enum": [
-          "CAN",
+          "Care Organisation",
+          "Drop-off Point",
+          "Feeding Scheme",
+          "Food Distribution",
+          "Other",
+          "Shelter",
+          "WhatsApp Group",
           "W-CAN"
         ]
       },
