@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core'
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router'
-import { Observable } from 'rxjs'
-import { map } from 'rxjs/operators'
+import { Observable, of } from 'rxjs'
+import { map, switchMap } from 'rxjs/operators'
 
 import { UserService } from './user.service'
 
@@ -10,6 +10,7 @@ import { UserService } from './user.service'
 })
 export class AuthGuard implements CanActivate {
 
+  authUser$ = this.userService.authUser$
   user$ = this.userService.user$
 
   constructor(
@@ -21,18 +22,24 @@ export class AuthGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> {
-    return this.user$.pipe(
-      map(user => {
-        let allowed: boolean
-        if (next.data.role) {
-          allowed = user.roles[next.data.role]
+    return this.authUser$.pipe(
+      switchMap(authUser => {
+        if (!authUser) {
+          return of(false)
+        } else if (!next.data.role) {
+          return of(true)
         } else {
-          allowed = user !== null
+          return this.user$
         }
-        if (!allowed) {
-          this.router.navigate(['/'])
+      }),
+      map(userOrResult => {
+        let result: boolean
+        if (userOrResult === true || userOrResult === false) {
+          result = userOrResult
+        } else {
+          result = userOrResult.roles[next.data.role]
         }
-        return allowed
+        return result
       })
     )
   }
