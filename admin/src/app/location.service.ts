@@ -1,21 +1,28 @@
 import { Injectable } from '@angular/core'
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore'
 import { Observable, from, of } from 'rxjs'
-import { catchError, map, switchMap, take } from 'rxjs/operators'
+import { map, switchMap, take } from 'rxjs/operators'
 import * as firebase from 'firebase/app'
 import 'firebase/firestore'
 
 import { Location, Collection } from './location'
 import { UserService } from './user.service'
+import { AlertService } from './alert.service'
 
 @Injectable({
   providedIn: 'root'
 })
 export class LocationService {
 
+  niceName = {
+    locations: 'Location',
+    'pending-locations': 'Pending location'
+  }
+
   constructor(
     private angularFirestore: AngularFirestore,
-    private userService: UserService
+    private userService: UserService,
+    private alertService: AlertService
   ) { }
 
   get categories(): string[] {
@@ -82,7 +89,7 @@ export class LocationService {
     )
   }
 
-  submitLocation(location: Location): Observable<string | {error: any}> {
+  submitLocation(location: Location): Observable<boolean> {
     return this.userService.authUser$.pipe(
       take(1),
       switchMap(authUser => {
@@ -94,13 +101,13 @@ export class LocationService {
           // This should not happen yet (until sudmitting changes is implemented)
           alert('Please tell rikusv something is broken.')
           // this.updateLocation(id, data)
-          return of({error: 'not implemented'})
+          return of(false)
         }
       })
     )
   }
 
-  savePendingLocation(location: Location): Observable<string | {error: any}> {
+  savePendingLocation(location: Location): Observable<boolean> {
     return this.userService.authUser$.pipe(
       take(1),
       switchMap(authUser => {
@@ -110,11 +117,11 @@ export class LocationService {
     )
   }
 
-  deletePendingLocation(id: string): Observable<string | {error: any}> {
-    return this.deleteLocation('pending-locations', id)
+  deletePendingLocation(location: Location): Observable<boolean> {
+    return this.deleteLocation('pending-locations', location)
   }
 
-  publishLocation(location: Location, collection: Collection): Observable<string | {error: any}> {
+  publishLocation(location: Location, collection: Collection): Observable<boolean> {
     return this.userService.authUser$.pipe(
       take(1),
       switchMap(authUser => {
@@ -131,65 +138,62 @@ export class LocationService {
     )
   }
 
-  createLocation(collection: Collection, data: Partial<Location>): Observable<string | {error: any}> {
+  createLocation(collection: Collection, data: Partial<Location>): Observable<boolean> {
     const locationsRef: AngularFirestoreCollection = this.angularFirestore.collection<Location>(collection)
     const id = this.angularFirestore.createId()
-    return from(locationsRef.doc(id).set(data)).pipe(
-      catchError(error => of(error)),
-      map(error => {
-        if (error) {
-          return { error }
-        } else {
-          return id
-        }
-      })
-    )
+    return from(locationsRef.doc(id).set(data)
+    .then(() => {
+      this.alertService.publishSuccess(`${this.niceName[collection]} ${data.name} created`)
+      return true
+    })
+    .catch(error => {
+      this.alertService.publishError(`Could not create ${this.niceName[collection]} - error ${JSON.stringify(error)}`)
+      return false
+    }))
   }
 
-  updateLocation(collection: Collection, id: string, data: Partial<Location>): Observable<string | {error: any}> {
+  updateLocation(collection: Collection, id: string, data: Partial<Location>): Observable<boolean> {
     const locationRef: AngularFirestoreDocument<Location> = this.angularFirestore.doc<Location>(`${collection}/${id}`)
-    return from(locationRef.update(data)).pipe(
-      catchError(error => of(error)),
-      map(error => {
-        if (error) {
-          return { error }
-        } else {
-          return id
-        }
-      })
-    )
+    return from(locationRef.update(data)
+    .then(() => {
+      this.alertService.publishSuccess(`${this.niceName[collection]} ${data.name} updated`)
+      return true
+    })
+    .catch(error => {
+      this.alertService.publishError(`Could not update ${this.niceName[collection]} - error ${JSON.stringify(error)}`)
+      return false
+    }))
   }
 
-  promoteLocation(id: string, data: Partial<Location>): Observable<string | {error: any}> {
+  promoteLocation(id: string, data: Partial<Location>): Observable<boolean> {
     const pendingLocationRef = this.angularFirestore.firestore.collection('pending-locations').doc(id)
     const locationRef = this.angularFirestore.firestore.collection('locations').doc(id)
     const batch = this.angularFirestore.firestore.batch()
     batch.set(locationRef, data)
     batch.delete(pendingLocationRef)
-    return from(batch.commit()).pipe(
-      catchError(error => of(error)),
-      map(error => {
-        if (error) {
-          return { error }
-        } else {
-          return id
-        }
-      })
-    )
+    return from(batch.commit()
+    .then(() => {
+      this.alertService.publishSuccess(`Location ${data.name} published`)
+      return true
+    })
+    .catch(error => {
+      this.alertService.publishError(`Could not publish location - error ${JSON.stringify(error)}`)
+      return false
+    }))
   }
 
-  deleteLocation(collection: Collection, id: string): Observable<string | {error: any}> {
+  deleteLocation(collection: Collection, location: Location): Observable<boolean> {
+    const id = location.id
     const locationRef = this.angularFirestore.firestore.collection(collection).doc(id)
-    return from(locationRef.delete()).pipe(
-      catchError(error => of(error)),
-      map(error => {
-        if (error) {
-          return { error }
-        } else {
-          return id
-        }
-      })
-    )
+    return from(locationRef.delete()
+    .then(() => {
+      this.alertService.publishSuccess(`${this.niceName[collection]} ${location.name} deleted`)
+      return true
+    })
+    .catch(error => {
+      this.alertService.publishError(`Could not delete ${this.niceName[collection]} - error ${JSON.stringify(error)}`)
+      return false
+    }))
   }
 
   transformToDatabase(location: Location, uid?: string): [string, Partial<Location>] {

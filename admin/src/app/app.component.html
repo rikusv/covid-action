@@ -46,6 +46,15 @@
   </div>
 </nav>
 
+<div class="alert-overlay container-fluid">
+  <div *ngFor="let error of (errors$ | async)" class="alert alert-danger my-3" role="alert">
+    {{ error }}
+  </div>
+  <div *ngFor="let message of (successMessages$ | async)" class="alert alert-info my-3" role="alert">
+    {{ message }}
+  </div>
+</div>
+
 <div class="container-fluid">
   <router-outlet *ngIf="authUser$ | async; else showLogin"></router-outlet>
 </div>

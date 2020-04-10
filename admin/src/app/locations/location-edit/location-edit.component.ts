@@ -232,20 +232,8 @@ export class LocationEditComponent implements OnInit {
     const location = this.locationForm.getRawValue()
     this.locationService.submitLocation(location).pipe(
       take(1),
-      tap(response => {
-        if (typeof response === 'string') {
-          this.alert$.next({
-            type: 'success',
-            text: `Record ${response} submitted`
-          })
-          this.createForm()
-        } else {
-          this.alert$.next({
-            type: 'danger',
-            text: `Error: ${JSON.stringify(response.error)}`
-          })
-        }
-      })
+      filter(written => written),
+      tap(() => this.createForm())
     ).subscribe()
   }
 
@@ -253,41 +241,17 @@ export class LocationEditComponent implements OnInit {
     const location = this.locationForm.getRawValue()
     this.locationService.savePendingLocation(location).pipe(
       take(1),
-      tap(response => {
-        if (typeof response === 'string') {
-          this.alert$.next({
-            type: 'success',
-            text: `Record ${response} saved`
-          })
-          this.router.navigate(['/', this.collection])
-        } else {
-          this.alert$.next({
-            type: 'danger',
-            text: `Error: ${JSON.stringify(response.error)}`
-          })
-        }
-      })
+      filter(written => written),
+      tap(() => this.router.navigate(['/', this.collection]))
     ).subscribe()
   }
 
   delete() {
     const location = this.locationForm.getRawValue()
-    this.locationService.deletePendingLocation(location.id).pipe(
+    this.locationService.deletePendingLocation(location).pipe(
       take(1),
-      tap(response => {
-        if (typeof response === 'string') {
-          this.alert$.next({
-            type: 'success',
-            text: `Record ${response} saved`
-          })
-          this.router.navigate(['/', this.collection])
-        } else {
-          this.alert$.next({
-            type: 'danger',
-            text: `Error: ${JSON.stringify(response.error)}`
-          })
-        }
-      })
+      filter(written => written),
+      tap(() => this.router.navigate(['/', this.collection]))
     ).subscribe()
   }
 
@@ -295,20 +259,8 @@ export class LocationEditComponent implements OnInit {
     const location = this.locationForm.getRawValue()
     this.locationService.publishLocation(location, this.collection).pipe(
       take(1),
-      tap(response => {
-        if (typeof response === 'string') {
-          this.alert$.next({
-            type: 'success',
-            text: `Record ${response} published`
-          })
-          this.router.navigate(['/', this.collection])
-        } else {
-          this.alert$.next({
-            type: 'danger',
-            text: `Error: ${JSON.stringify(response.error)}`
-          })
-        }
-      })
+      filter(written => written),
+      tap(() => this.router.navigate(['/', this.collection]))
     ).subscribe()
   }
 

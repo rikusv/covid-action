@@ -1,11 +1,13 @@
 import { BrowserModule } from '@angular/platform-browser'
-import { NgModule } from '@angular/core'
+import { NgModule, ErrorHandler } from '@angular/core'
 import { HttpClientModule } from '@angular/common/http'
 import { ReactiveFormsModule } from '@angular/forms'
 
 import { environment } from '../environments/environment'
 
 import { AngularFireModule } from '@angular/fire'
+
+import { ErrorHandlerService } from './error-handler.service'
 
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
@@ -37,7 +39,7 @@ import { UsersComponent } from './users/users.component'
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [{provide: ErrorHandler, useClass: ErrorHandlerService}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

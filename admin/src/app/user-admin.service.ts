@@ -4,6 +4,7 @@ import { Observable, from } from 'rxjs'
 import 'firebase/firestore'
 
 import { User } from './user'
+import { AlertService } from './alert.service'
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,7 @@ export class UserAdminService {
 
   constructor(
     private angularFirestore: AngularFirestore,
+    private alertService: AlertService
   ) { }
 
   get users$(): Observable<User[]> {
@@ -19,16 +21,20 @@ export class UserAdminService {
     return queryRef.valueChanges({ idField: 'id' })
   }
 
-  removeRole(user: User, role: string): Observable<void | {error: any}> {
+  removeRole(user: User, role: string) {
     const roles = user.roles
     delete roles[role]
-    return from(this.angularFirestore.collection('users').doc(user.id).update({roles}))
+    this.angularFirestore.collection('users').doc(user.id).update({roles})
+    .then(() => this.alertService.publishSuccess(`Role ${role} removed from ${user.name || user.email}`))
+    .catch(error => this.alertService.publishError(`Could not remove role - error ${error.toString()}`))
   }
 
-  addRole(user: User, role: string): Observable<void | {error: any}> {
+  addRole(user: User, role: string) {
     const roles = user.roles
     roles[role] = true
-    return from(this.angularFirestore.collection('users').doc(user.id).update({roles}))
+    this.angularFirestore.collection('users').doc(user.id).update({roles})
+    .then(() => this.alertService.publishSuccess(`Role ${role} added to ${user.name || user.email}`))
+    .catch(error => this.alertService.publishError(`Could not add role - error ${error.toString()}`))
   }
 
 }
