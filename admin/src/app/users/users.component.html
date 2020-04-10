@@ -1,0 +1,26 @@
+<div class="row">
+  <div *ngFor="let user of users$ | async" class="col-sm-6">
+    <div class="card mt-3">
+      <div class="card-body">
+        <h5 class="card-title">
+          {{ user.name }}
+          <!-- For later when there are more roles -->
+          <span *ngFor="let role of keysFromMap(user.roles)" class="badge badge-secondary">
+            {{ role }}
+          </span>
+        </h5>
+        <p class="card-text">
+          {{ user.email }}
+        </p>
+        <p class="card-text">
+          {{ user.phone }}
+        </p>
+        <button *ngIf="!user.roles || !user.roles.admin" (click)="addRole(user, 'admin')" class="btn btn-outline-warning" type="button">
+          Make Admin
+        </button>
+        <button *ngIf="user.roles && user.roles.admin" (click)="removeRole(user, 'admin')" class="btn btn-outline-secondary" type="button">
+          Revoke Admin
+        </button>
+    </div>
+  </div>
+</div>

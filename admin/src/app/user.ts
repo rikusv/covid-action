@@ -1,5 +1,8 @@
 export class User {
-  roles: {
+  id: string
+  email?: string
+  name?: string
+  roles?: {
     [role: string]: boolean
   }
 }

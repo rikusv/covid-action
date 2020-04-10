@@ -16,7 +16,7 @@
             Add
           </a>
         </li>
-        <li *ngIf="(user$ | async)?.roles?.admin" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-item">
+        <li *ngIf="(user$ | async)?.roles?.admin" routerLinkActive="active" class="nav-item">
           <a class="nav-link" routerLink="/pending-locations">
             Pending
           </a>
@@ -24,6 +24,11 @@
         <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-item">
           <a class="nav-link" routerLink="/locations/submit">
             Submit
+          </a>
+        </li>
+        <li *ngIf="(user$ | async)?.roles?.admin" routerLinkActive="active" class="nav-item">
+          <a class="nav-link" routerLink="/users">
+            Users
           </a>
         </li>
         <li class="nav-item">

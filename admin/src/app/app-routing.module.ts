@@ -8,6 +8,7 @@ import { LocationsComponent } from './locations/locations.component'
 import { LocationListComponent } from './locations/location-list/location-list.component'
 import { LocationViewComponent } from './locations/location-view/location-view.component'
 import { LocationEditComponent } from './locations/location-edit/location-edit.component'
+import { UsersComponent } from './users/users.component'
 
 const routes: Routes = [
   {
@@ -69,6 +70,14 @@ const routes: Routes = [
         component: LocationEditComponent
       }
     ]
+  },
+  {
+    path: 'users',
+    component: UsersComponent,
+    canActivate: [AuthGuard],
+    data: {
+      role: 'admin'
+    },
   }
 ]
 

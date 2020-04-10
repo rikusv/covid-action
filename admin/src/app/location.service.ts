@@ -66,7 +66,7 @@ export class LocationService {
 
   getSimilarLocations$(field: string, value: string): Observable<Location[]> {
     const queryRef = this.angularFirestore.collection<Location>('locations', ref => ref.where(field, '==', value))
-    return queryRef.valueChanges({idField: 'id'}).pipe(
+    return queryRef.valueChanges({ idField: 'id' }).pipe(
       map(docs => docs.map(doc => {
         return this.transformFromDatabase(doc)
       }))

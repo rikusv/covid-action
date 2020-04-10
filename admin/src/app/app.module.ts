@@ -16,6 +16,7 @@ import { LocationViewComponent } from './locations/location-view/location-view.c
 import { LocationListComponent } from './locations/location-list/location-list.component'
 import { LocationComponent } from './locations/location/location.component'
 import { LoginComponent } from './login/login.component'
+import { UsersComponent } from './users/users.component'
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { LoginComponent } from './login/login.component'
     LocationViewComponent,
     LocationListComponent,
     LocationComponent,
-    LoginComponent
+    LoginComponent,
+    UsersComponent
   ],
   imports: [
     BrowserModule,

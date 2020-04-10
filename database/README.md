@@ -17,7 +17,7 @@ Changes is deployed using:
 ```bash
 npm install -g firebase-tools # First time
 firebase login
-firebase deploy
+firebase deploy --only firestore:rules
 ```
 
 ## Data backups
