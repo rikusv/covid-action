@@ -2,7 +2,7 @@
 
 The covid-action API provides endpoints to interact with the data programmatical via HTTP endpoints. For example, an external system can write data to the covid-action map.
 
-At the moment, this consists only of the [functions](./functions). See README.md for development information.
+At the moment, this consists only of the [Cloud Functions](../database/functions). See README.md for development information.
 
 ## Usage
 

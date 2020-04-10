@@ -1,7 +1,7 @@
 import { Client, PlaceAutocompleteRequest, PlaceAutocompleteResponse, PlaceDetailsRequest, PlaceDetailsResponse } from "@googlemaps/google-maps-services-js"
 import * as functions from 'firebase-functions'
 
-import { sendError } from './utils'
+import { sendError } from './shared'
 
 const client = new Client()
 

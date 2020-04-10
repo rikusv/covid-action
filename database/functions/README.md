@@ -1,6 +1,6 @@
-# covid-action API functions
+# covid-action Cloud Functions
 
-The covid-action API functions implement endpoints to interact with the data programmatically via HTTP endpoints.
+The covid-action Cloud Functions implement HTTP endpoints to interact with the data programmatically, and triggers for processing in the database.
 
 ## Development
 

@@ -2,16 +2,12 @@
 
 import { DocumentData, DocumentSnapshot, GeoPoint } from '@google-cloud/firestore'
 import * as functions from 'firebase-functions'
-import * as admin from 'firebase-admin'
 import { createHash } from 'crypto'
 import Ajv from 'ajv'
 import locationsSchema from './schema/locations.json'
 
-import { sendError } from './utils'
+import { db, sendError } from './shared'
 
-admin.initializeApp(functions.config().firebase)
-
-const db = admin.firestore()
 
 const locationCollection = db.collection('locations')
 const logCollection = db.collection('logs')
