@@ -33,13 +33,16 @@ export class AuthGuard implements CanActivate {
         }
       }),
       map(userOrResult => {
-        let result: boolean
+        let allowed: boolean
         if (userOrResult === true || userOrResult === false) {
-          result = userOrResult
+          allowed = userOrResult
         } else {
-          result = userOrResult.roles[next.data.role]
+          allowed = userOrResult.roles && userOrResult.roles[next.data.role]
         }
-        return result
+        if (!allowed) {
+          this.router.navigate(['/'])
+        }
+        return allowed
       })
     )
   }
