@@ -1,4 +1,4 @@
-<div class="input-group mb-3">
+<div *ngIf="(confirmationResult$ | async) === null" class="input-group mb-3">
   <input type="text" class="form-control" [formControl]="phoneNumber" placeholder="+27">
   <div class="input-group-append">
     <span *ngIf="phoneNumber.errors?.pattern" class="input-group-text text-danger">
@@ -9,7 +9,6 @@
     </button>
   </div>
 </div>
-<div id="recaptcha-container" class="mb-3"></div>
 <div *ngIf="confirmationResult$ | async as confirmationResult" class="input-group mb-3">
   <div class="input-group-prepend">
     <span class="input-group-text">Verification code</span>
@@ -21,6 +20,7 @@
     </button>
   </div>
 </div>
+<div id="recaptcha-container" class="mb-3"></div>
 
 <button (click)="loginWithGoogle()" type="button" class="btn btn-outline-primary my-2">
   Log in with Google
