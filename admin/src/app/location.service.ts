@@ -28,12 +28,14 @@ export class LocationService {
   get categories(): string[] {
     return [
       'Care Organisation',
+      'Community Based Organisation',
+      'Community Police Forum',
       'Drop-off Point',
       'Feeding Scheme',
       'Food Distribution',
       'Other',
       'Shelter',
-      'WhatsApp Group',
+      'WhatsApp Group'
     ]
   }
 
