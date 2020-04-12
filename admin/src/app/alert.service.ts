@@ -13,22 +13,24 @@ export class AlertService {
   constructor() { }
 
   publishError(error: string) {
-    const alerts = [...this.errors$.value]
+    let alerts = [...this.errors$.value]
     alerts.unshift(error)
     this.errors$.next(alerts)
     setTimeout(() => {
+      alerts = [...this.errors$.value]
       alerts.pop()
       this.errors$.next(alerts)
     }, 5000)
   }
 
   publishSuccess(message: string) {
-    const alerts = [...this.success$.value]
+    let alerts = [...this.success$.value]
     alerts.unshift(message)
     this.success$.next(alerts)
     setTimeout(() => {
+      alerts = [...this.success$.value]
       alerts.pop()
-      this.errors$.next(alerts)
+      this.success$.next(alerts)
     }, 2000)
   }
 
