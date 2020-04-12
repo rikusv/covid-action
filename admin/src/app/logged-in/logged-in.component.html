@@ -6,6 +6,12 @@
     <p *ngIf="(pendingLocationCount$ | async) > 0">
       There are <a routerLink="/pending-locations">{{ (pendingLocationCount$ | async) }} pending locations</a> to publish.
     </p>
+    <p>
+      Locations can be <a routerLink="/locations/add">added directly</a> or <a routerLink="/locations/submit">submitted for review</a>.
+    </p>
+    <p>
+      <a routerLink="/locations/categories">Categories</a> and <a routerLink="/locations/tags">Tags</a> can be maintained.
+    </p>
   </ng-container>
   <ng-container *ngIf="authUser$ | async">
     <button routerLink="/locations/submit" class="btn btn-primary my-3">
