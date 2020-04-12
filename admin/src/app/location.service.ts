@@ -6,6 +6,7 @@ import * as firebase from 'firebase/app'
 import 'firebase/firestore'
 
 import { Location, Collection } from './location'
+import { MasterData } from './master-data'
 import { UserService } from './user.service'
 import { AlertService } from './alert.service'
 
@@ -25,36 +26,81 @@ export class LocationService {
     private alertService: AlertService
   ) { }
 
-  get categories(): string[] {
-    return [
-      'Care Organisation',
-      'Community Based Organisation',
-      'Community Police Forum',
-      'Drop-off Point',
-      'Feeding Scheme',
-      'Food Distribution',
-      'Other',
-      'Shelter',
-      'WhatsApp Group'
-    ]
+  get activeCategoryKeys$(): Observable<string[]> {
+    return this.getActiveMasterDataKeys$('categories')
   }
 
-  get tags(): string[] {
-    return [
-      'animal',
-      'clothes',
-      'Corona Care',
-      'disability',
-      'donate',
-      'elderly',
-      'food',
-      'fundraiser',
-      'homeless',
-      'hygiene',
-      'Operation Hunger',
-      'volunteer',
-      'youth'
-    ]
+  get categories$(): Observable<MasterData[]> {
+    return this.getMasterData$('categories')
+  }
+
+  get activeTagKeys$(): Observable<string[]> {
+    return this.getActiveMasterDataKeys$('tags')
+  }
+
+  get tags$(): Observable<MasterData[]> {
+    return this.getMasterData$('tags')
+  }
+
+  getActiveMasterDataKeys$(type: 'tags' | 'categories'): Observable<string[]> {
+    const queryRef: AngularFirestoreCollection = this.angularFirestore
+    .collection('master-data').doc('locations')
+    .collection(type, ref => ref.where('active', '==', true))
+    return queryRef.valueChanges({idField: 'id'}).pipe(
+      map(docs => docs.map(doc => doc.id))
+    )
+  }
+
+  getMasterData$(type: 'tags' | 'categories'): Observable<any[]> {
+    const queryRef: AngularFirestoreCollection = this.angularFirestore
+    .collection('master-data').doc('locations')
+    .collection(type)
+    return queryRef.valueChanges({idField: 'id'})
+  }
+
+  // get categories(): string[] {
+  //   return [
+  //     'Care Organisation',
+  //     'Community Based Organisation',
+  //     'Community Police Forum',
+  //     'Drop-off Point',
+  //     'Feeding Scheme',
+  //     'Food Distribution',
+  //     'Other',
+  //     'Shelter',
+  //     'WhatsApp Group'
+  //   ]
+  // }
+
+  enableCategory(category: string): Observable<boolean> {
+    return this.updateMasterData('categories', category, true)
+  }
+
+  disableCategory(category: string): Observable<boolean> {
+    return this.updateMasterData('categories', category, false)
+  }
+
+  enableTag(tag: string): Observable<boolean> {
+    return this.updateMasterData('tags', tag, true)
+  }
+
+  disableTag(tag: string): Observable<boolean> {
+    return this.updateMasterData('tags', tag, false)
+  }
+
+  updateMasterData(type: 'tags' | 'categories', name: string, active: boolean): Observable<boolean> {
+    const categoryRef: AngularFirestoreDocument = this.angularFirestore
+    .collection('master-data').doc('locations')
+    .collection(type).doc(name)
+    return from(categoryRef.set({active}, {merge: true})
+    .then(() => {
+      this.alertService.publishSuccess(`Type ${type} ${name} updated`)
+      return true
+    })
+    .catch(error => {
+      this.alertService.publishError(`Could not update ${type} - error ${JSON.stringify(error)}`)
+      return false
+    }))
   }
 
   getLocationCount$(collection: Collection): Observable<number> {

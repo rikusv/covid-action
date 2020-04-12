@@ -1,0 +1,36 @@
+<form [formGroup]="newcategoryForm" (ngSubmit)="addCategory()">
+  <div class="input-group my-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text">Add</span>
+    </div>
+    <input type="text" class="form-control" formControlName="name">
+    <div class="input-group-append">
+      <button class="btn btn-outline-primary" type="submit">
+        Add
+      </button>
+    </div>
+  </div>
+</form>
+
+<div class="row">
+  <div *ngFor="let category of categories$ | async" class="col-sm-6">
+    <div class="card mt-3">
+      <div class="card-body">
+        <h5 class="card-title">
+          {{ category.id }}
+          <small *ngIf="category.active" class="badge badge-primary">
+            Active
+          </small>
+          <span *ngIf="!category.active" class="badge badge-secondary">
+            Disabled
+          </span>
+        </h5>
+        <button *ngIf="category.active" (click)="disableCategory(category.id)" class="btn btn-outline-secondary" type="button">
+          Disable
+        </button>
+        <button *ngIf="!category.active" (click)="enableCategory(category.id)" class="btn btn-outline-primary" type="button">
+          Enable
+        </button>
+    </div>
+  </div>
+</div>

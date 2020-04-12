@@ -26,8 +26,8 @@ export class LocationEditComponent implements OnInit {
   path: string
   collection: Collection
   locationForm: FormGroup
-  categories = this.locationService.categories
-  allTags = this.locationService.tags
+  categories$ = this.locationService.activeCategoryKeys$
+  tags$ = this.locationService.activeTagKeys$
   addressInFocus = false
   addressLoading = false
   addressSuggestions: PlaceSuggestion[] = []
@@ -190,9 +190,9 @@ export class LocationEditComponent implements OnInit {
     return this.locationForm.get('tags') as FormArray
   }
 
-  get availableTags(): string[] {
+  availableTags(allTags: string[]): string[] {
     const usedTags = this.tags.getRawValue()
-    return this.allTags.filter(tag => !usedTags.includes(tag))
+    return allTags ? allTags.filter(tag => !usedTags.includes(tag)) : []
   }
 
   setMapUrl(latitude: number, longitude: number) {

@@ -8,6 +8,8 @@ import { LocationsComponent } from './locations/locations.component'
 import { LocationListComponent } from './locations/location-list/location-list.component'
 import { LocationViewComponent } from './locations/location-view/location-view.component'
 import { LocationEditComponent } from './locations/location-edit/location-edit.component'
+import { LocationCategoriesComponent } from './locations/location-categories/location-categories.component'
+import { LocationTagsComponent } from './locations/location-tags/location-tags.component'
 import { UsersComponent } from './users/users.component'
 
 const routes: Routes = [
@@ -28,16 +30,32 @@ const routes: Routes = [
         component: LocationListComponent
       },
       {
-        path: 'submit',
-        component: LocationEditComponent
-      },
-      {
         path: 'add',
         component: LocationEditComponent,
         canActivate: [AuthGuard],
         data: {
           role: 'admin'
         }
+      },
+      {
+        path: 'categories',
+        component: LocationCategoriesComponent,
+        canActivate: [AuthGuard],
+        data: {
+          role: 'admin'
+        }
+      },
+      {
+        path: 'tags',
+        component: LocationTagsComponent,
+        canActivate: [AuthGuard],
+        data: {
+          role: 'admin'
+        }
+      },
+      {
+        path: 'submit',
+        component: LocationEditComponent
       },
       {
         path: ':id',

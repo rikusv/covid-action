@@ -19,6 +19,8 @@ import { LocationListComponent } from './locations/location-list/location-list.c
 import { LocationComponent } from './locations/location/location.component'
 import { LoginComponent } from './login/login.component'
 import { UsersComponent } from './users/users.component'
+import { LocationCategoriesComponent } from './locations/location-categories/location-categories.component'
+import { LocationTagsComponent } from './locations/location-tags/location-tags.component'
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import { UsersComponent } from './users/users.component'
     LocationListComponent,
     LocationComponent,
     LoginComponent,
-    UsersComponent
+    UsersComponent,
+    LocationCategoriesComponent,
+    LocationTagsComponent
   ],
   imports: [
     BrowserModule,

@@ -30,6 +30,11 @@ service cloud.firestore {
       allow update: if isAdminUser();
       allow delete: if isAdminUser();
     }
+    match /master-data/{group}/{type}/{value} {
+      allow list: if isAdminUser() || (request.auth.uid != null && resource.data.active == true);
+      allow create: if isAdminUser();
+      allow update: if isAdminUser();
+    }
     match /users/{user} {
       allow get: if request.auth.uid == user;
       allow read: if isAdminUser();

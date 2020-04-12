@@ -1,0 +1,36 @@
+<form [formGroup]="newTagForm" (ngSubmit)="addTag()">
+  <div class="input-group my-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text">Add</span>
+    </div>
+    <input type="text" class="form-control" formControlName="name">
+    <div class="input-group-append">
+      <button class="btn btn-outline-primary" type="submit">
+        Add
+      </button>
+    </div>
+  </div>
+</form>
+
+<div class="row">
+  <div *ngFor="let tag of tags$ | async" class="col-sm-6">
+    <div class="card mt-3">
+      <div class="card-body">
+        <h5 class="card-title">
+          {{ tag.id }}
+          <small *ngIf="tag.active" class="badge badge-primary">
+            Active
+          </small>
+          <span *ngIf="!tag.active" class="badge badge-secondary">
+            Disabled
+          </span>
+        </h5>
+        <button *ngIf="tag.active" (click)="disableTag(tag.id)" class="btn btn-outline-secondary" type="button">
+          Disable
+        </button>
+        <button *ngIf="!tag.active" (click)="enableTag(tag.id)" class="btn btn-outline-primary" type="button">
+          Enable
+        </button>
+    </div>
+  </div>
+</div>

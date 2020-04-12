@@ -31,7 +31,7 @@
               <label class="input-group-text">Category</label>
             </div>
             <select formControlName="category" class="custom-select">
-              <option *ngFor="let option of categories" [value]="option">
+              <option *ngFor="let option of (categories$ | async)" [value]="option">
                 {{ option }}
               </option>
             </select>
@@ -46,7 +46,7 @@
                 Tags
               </button>
               <div class="dropdown-menu">
-                <a *ngFor="let tag of availableTags" (click)="addTag(tag)" class="dropdown-item">{{ tag }}</a>
+                <a *ngFor="let tag of availableTags(tags$ | async)" (click)="addTag(tag)" class="dropdown-item">{{ tag }}</a>
               </div>
             </div>
             <div class="form-group">
