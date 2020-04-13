@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core'
-import { Observable, from } from 'rxjs'
-import { filter, map, switchMap, take } from 'rxjs/operators'
+import { Router } from '@angular/router'
+import { BehaviorSubject, Observable, from } from 'rxjs'
+import { filter, map, switchMap, take, tap } from 'rxjs/operators'
 import { AngularFireAuth } from '@angular/fire/auth'
 import { AngularFirestore, DocumentSnapshot, DocumentData } from '@angular/fire/firestore'
 import { auth, User as AuthUser } from 'firebase/app'
@@ -13,10 +14,25 @@ import { User } from './user'
 })
 export class UserService {
 
+  targetUrl$ = new BehaviorSubject(null)
+
   constructor(
     private angularFirestore: AngularFirestore,
-    private angularFireAuth: AngularFireAuth
+    private angularFireAuth: AngularFireAuth,
+    private router: Router
   ) { }
+
+  setTargetUrl(url: string) {
+    this.targetUrl$.next(url)
+    this.authUser$.pipe(
+      take(1),
+      tap(() => this.router.navigate([url]))
+    )
+  }
+
+  getTargetUrl$(): BehaviorSubject<string> {
+    return this.targetUrl$
+  }
 
   loginWithGoogle() {
     this.angularFireAuth.signInWithPopup(new auth.GoogleAuthProvider())
