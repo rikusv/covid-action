@@ -30,7 +30,7 @@ export class UserAdminService {
   }
 
   addRole(user: User, role: string) {
-    const roles = user.roles
+    const roles = user.roles || {}
     roles[role] = true
     this.angularFirestore.collection('users').doc(user.id).update({roles})
     .then(() => this.alertService.publishSuccess(`Role ${role} added to ${user.name || user.email}`))

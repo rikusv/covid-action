@@ -1,6 +1,9 @@
 <div class="jumbotron">
-  <h1 class="display-4">Hi {{ (authUser$ | async)?.displayName || (authUser$ | async)?.phoneNumber }}</h1>
-  <p class="lead">This is where data for the <a href="https://covid-action-map.web.app/" target="_blank">covid-action map</a> can be maintained.</p>
+  <h1 class="display-4">
+    Hi {{ (authUser$ | async)?.displayName || (authUser$ | async)?.phoneNumber }}
+  </h1>
+  <p class="lead">This is where data for the <a href="https://www.onelovesa.com/" target="_blank">One Love SA </a><a href="https://covid-action-map.web.app/" target="_blank">covid-action map</a> is maintained.
+  </p>
   <hr class="my-4">
   <ng-container *ngIf="(user$ | async)?.roles?.admin">
     <p *ngIf="(pendingLocationCount$ | async) > 0">

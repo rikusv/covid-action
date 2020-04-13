@@ -21,6 +21,7 @@ import { LoginComponent } from './login/login.component'
 import { UsersComponent } from './users/users.component'
 import { LocationCategoriesComponent } from './locations/location-categories/location-categories.component'
 import { LocationTagsComponent } from './locations/location-tags/location-tags.component'
+import { AboutComponent } from './about/about.component'
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { LocationTagsComponent } from './locations/location-tags/location-tags.c
     LoginComponent,
     UsersComponent,
     LocationCategoriesComponent,
-    LocationTagsComponent
+    LocationTagsComponent,
+    AboutComponent
   ],
   imports: [
     BrowserModule,

@@ -1,6 +1,8 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-sm navbar-light bg-light">
 
-  <a routerLink="/" class="navbar-brand">covid-action</a>
+  <a routerLink="/" class="navbar-brand">
+    <img src="assets/onelovesa_160x160.png" width="30" height="30" alt="onelovesa">
+  </a>
 
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -82,7 +84,7 @@
       </ng-container>
 
       <li class="nav-item">
-        <a href="https://github.com/rikusv/covid-action" target="_blank" class="nav-link">
+        <a routerLink="/about" class="nav-link">
           About
         </a>
       </li>
@@ -106,11 +108,5 @@
 </div>
 
 <ng-template #showLogin>
-  <div class="jumbotron">
-    <h1 class="display-4">Data for the map</h1>
-    <p class="lead">This is where data for the <a href="https://covid-action-map.web.app/" target="_blank">covid-action map</a> can be maintained.</p>
-    <hr class="my-4">
-    <p>You need to please log in though.</p>
-    <app-login></app-login>
-  </div>
+  <app-login></app-login>
 </ng-template>

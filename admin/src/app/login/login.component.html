@@ -1,27 +1,45 @@
-<div *ngIf="(confirmationResult$ | async) === null" class="input-group mb-3">
-  <input type="text" class="form-control" [formControl]="phoneNumber" placeholder="+27">
-  <div class="input-group-append">
-    <span *ngIf="phoneNumber.errors?.pattern" class="input-group-text text-danger">
-      Enter a full telephone number starting with '+'
-    </span>
-    <button *ngIf="!phoneNumber.errors?.pattern" (click)="loginWithPhone()" class="btn btn-outline-primary" type="button" >
-      Log in by Phone
-    </button>
-  </div>
-</div>
-<div *ngIf="confirmationResult$ | async as confirmationResult" class="input-group mb-3">
-  <div class="input-group-prepend">
-    <span class="input-group-text">Verification code</span>
-  </div>
-  <input type="text" class="form-control" [formControl]="verificationCode" placeholder="Code that was sent to your mobile device">
-  <div class="input-group-append">
-    <button (click)="loginWithPhoneConfirm(confirmationResult)" class="btn btn-outline-primary" type="button">
-      Confirm
-    </button>
-  </div>
-</div>
-<div id="recaptcha-container" class="mb-3"></div>
+<div class="jumbotron">
+  <h1 class="display-4">Log in</h1>
+  <p class="lead">
+    <ng-container *ngIf="(targetUrl$ | async) !== '/locations/submit'; else locationSubmit">
+      This is where data for the <a href="https://covid-action-map.web.app/" target="_blank">covid-action map</a> can be maintained.
+    </ng-container>
+    <ng-template #locationSubmit>
+      Please log in to register the details of your organisation or group.
+    </ng-template>
+  </p>
+  <hr class="my-4">
 
-<button (click)="loginWithGoogle()" type="button" class="btn btn-outline-primary my-2">
-  Log in with Google
-</button>
+  <button (click)="loginWithGoogle()" type="button" class="btn btn-outline-primary my-2">
+    Log in with Google
+  </button>
+
+  <p class="mt-3">
+    Alternatively, log in by entering your mobile phone number below.
+  </p>
+
+  <div *ngIf="(confirmationResult$ | async) === null" class="input-group mb-3">
+    <input type="text" class="form-control" [formControl]="phoneNumber" placeholder="+27">
+    <div class="input-group-append">
+      <span *ngIf="phoneNumber.errors?.pattern" class="input-group-text text-danger">
+        Enter a full telephone number starting with '+'
+      </span>
+      <button *ngIf="!phoneNumber.errors?.pattern" (click)="loginWithPhone()" class="btn btn-outline-primary" type="button" >
+        Log in by Phone
+      </button>
+    </div>
+  </div>
+  <div *ngIf="confirmationResult$ | async as confirmationResult" class="input-group mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text">Verification code</span>
+    </div>
+    <input type="text" class="form-control" [formControl]="verificationCode" placeholder="Code that was sent to your mobile device">
+    <div class="input-group-append">
+      <button (click)="loginWithPhoneConfirm(confirmationResult)" class="btn btn-outline-primary" type="button">
+        Confirm
+      </button>
+    </div>
+  </div>
+  <div id="recaptcha-container" class="mb-3"></div>
+
+</div>

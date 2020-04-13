@@ -12,6 +12,7 @@ import { UserService } from '../user.service'
 })
 export class LoginComponent implements OnInit {
 
+  targetUrl$ = this.userService.getTargetUrl$()
   phoneNumber = new FormControl('', Validators.pattern('\\+[0-9]*'))
   verificationCode = new FormControl('')
   confirmationResult$: Observable<auth.ConfirmationResult>

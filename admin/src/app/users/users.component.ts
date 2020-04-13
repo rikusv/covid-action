@@ -27,7 +27,7 @@ export class UsersComponent implements OnInit {
   }
 
   keysFromMap(map: any): any[] {
-    return Object.keys(map)
+    return Object.keys(map || {})
   }
 
 }

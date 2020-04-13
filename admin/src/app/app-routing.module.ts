@@ -11,6 +11,7 @@ import { LocationEditComponent } from './locations/location-edit/location-edit.c
 import { LocationCategoriesComponent } from './locations/location-categories/location-categories.component'
 import { LocationTagsComponent } from './locations/location-tags/location-tags.component'
 import { UsersComponent } from './users/users.component'
+import { AboutComponent } from './about/about.component'
 
 const routes: Routes = [
   {
@@ -96,6 +97,10 @@ const routes: Routes = [
     data: {
       role: 'admin'
     },
+  },
+  {
+    path: 'about',
+    component: AboutComponent,
   }
 ]
 
