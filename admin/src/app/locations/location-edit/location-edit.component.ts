@@ -134,7 +134,8 @@ export class LocationEditComponent implements OnInit {
       touchedBy: this.fb.group({}),
       tags: this.fb.array([]),
       webUrl: ['', Validators.pattern('http.*')],
-      whatsAppUrl: ['', Validators.pattern('http.*')]
+      whatsAppUrl: ['', Validators.pattern('http.*')],
+      registration: ['']
     })
   }
 

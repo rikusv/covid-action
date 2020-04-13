@@ -11,6 +11,7 @@ export class Location {
   email: string
   googlePlaceId: string
   name: string
+  registration: string
   tags: string[] = []
   telephone: string
   webUrl: string
