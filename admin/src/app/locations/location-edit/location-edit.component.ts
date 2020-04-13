@@ -66,13 +66,13 @@ export class LocationEditComponent implements OnInit {
       }),
       tap(location => {
         if (this.path === 'submit') {
-          this.heading = ['Submit', 'new location for approval']
+          this.heading = ['Submit', 'care group location for approval']
         } else if (this.path === 'add') {
-          this.heading = ['Add', 'publish new location']
+          this.heading = ['Add', 'publish new care group location']
         } else if (this.collection === 'locations') {
-          this.heading = ['Edit', 'published location']
+          this.heading = ['Edit', 'published care group location']
         } else {
-          this.heading = ['Edit / Publish', 'pending location']
+          this.heading = ['Edit / Publish', 'pending care group location']
         }
         if (location === null) {
           if (!this.new) {
